@@ -1,0 +1,17 @@
+.app {
+  text-align: center;
+  font-family: "Segoe UI", sans-serif;
+  padding: 20px;
+}
+input {
+  margin-top: 10px;
+}
+.recommendations {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.summary {
+  margin-top: 20px;
+}

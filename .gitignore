@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*.env
+venv/
+env/
+*.sqlite3
+
+# Node
+node_modules/
+npm-debug.log
+.env
+
+# React (client)
+client/node_modules/
+client/build/
+
+# System
+.DS_Store
+Thumbs.db
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# Coverage
+coverage/

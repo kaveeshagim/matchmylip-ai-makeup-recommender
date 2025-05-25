@@ -22,6 +22,8 @@ type LipColorResult = {
 function App() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [result, setResult] = useState<LipColorResult | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleUpload = async () => {
     if (!selectedFile) return;
@@ -29,15 +31,25 @@ function App() {
     const formData = new FormData();
     formData.append("image", selectedFile);
 
+    setIsLoading(true);
+    setResult(null);
+    setError(null); // Clear previous error
+
     try {
       const response = await axios.post(
         "http://localhost:5000/api/recommend",
         formData
       );
-      console.log("Upload successful", response.data);
-      setResult(response.data);
-    } catch (error) {
-      console.error("Upload failed", error);
+
+      if (response.data.error) {
+        setError(response.data.error); // Set backend error
+      } else {
+        setResult(response.data);
+      }
+    } catch (err) {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -50,6 +62,9 @@ function App() {
         onChange={(e) => setSelectedFile(e.target.files?.[0] || null)}
       />
       <button onClick={handleUpload}>Analyze</button>
+
+      {isLoading && <p className={styles.spinner}>Analyzing your lips... 💅</p>}
+      {error && <p className={styles.error}>{error}</p>}
 
       {result && (
         <>

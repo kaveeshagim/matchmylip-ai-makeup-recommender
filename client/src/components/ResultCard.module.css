@@ -1,14 +1,18 @@
 .card {
+  width: 220px;
+  padding: 15px;
   border: 1px solid #ccc;
   border-radius: 12px;
-  padding: 15px;
-  width: 200px;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
+
 .card img {
   width: 100%;
   border-radius: 8px;
+  object-fit: cover;
 }
+
 .card a {
   display: inline-block;
   margin-top: 10px;

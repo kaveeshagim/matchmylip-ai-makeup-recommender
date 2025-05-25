@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import ResultCard from "./components/ResultCard";
-import "./App.css";
+import styles from "./App.module.css";
 
 type LipColorResult = {
   undertone: string;
@@ -34,6 +34,7 @@ function App() {
         "http://localhost:5000/api/recommend",
         formData
       );
+      console.log("Upload successful", response.data);
       setResult(response.data);
     } catch (error) {
       console.error("Upload failed", error);
@@ -41,7 +42,7 @@ function App() {
   };
 
   return (
-    <div className="app">
+    <div className={styles.app}>
       <h1>💄 MatchMyLip</h1>
       <input
         type="file"
@@ -52,7 +53,7 @@ function App() {
 
       {result && (
         <>
-          <div className="summary">
+          <div className={styles.summary}>
             <p>
               <strong>Undertone:</strong> {result.undertone}
             </p>
@@ -71,7 +72,7 @@ function App() {
             </p>
           </div>
 
-          <div className="recommendations">
+          <div className={styles.recommendations}>
             {result.recommended_shades.map((shade, index) => (
               <ResultCard key={index} shade={shade} />
             ))}

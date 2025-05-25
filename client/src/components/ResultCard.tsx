@@ -1,5 +1,5 @@
 import React from "react";
-import "./ResultCard.css";
+import styles from "./ResultCard.module.css";
 
 type Shade = {
   name: string;
@@ -14,7 +14,7 @@ type Props = {
 
 const ResultCard: React.FC<Props> = ({ shade }) => {
   return (
-    <div className="card">
+    <div className={styles.card}>
       <img src={shade.image} alt={shade.name} />
       <h3>{shade.name}</h3>
       <p>

@@ -6,6 +6,7 @@ type Shade = {
   hex: string;
   image: string;
   link: string;
+  confidence: number;
 };
 
 type Props = {
@@ -20,6 +21,7 @@ const ResultCard: React.FC<Props> = ({ shade }) => {
       <p>
         Color: <span style={{ backgroundColor: shade.hex }}>{shade.hex}</span>
       </p>
+      <p>Confidence: {shade.confidence}%</p>
       <a href={shade.link} target="_blank" rel="noopener noreferrer">
         Buy Now
       </a>

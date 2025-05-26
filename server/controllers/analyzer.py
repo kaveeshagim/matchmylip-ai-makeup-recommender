@@ -106,7 +106,21 @@ def analyze_image(image_file):
         shade_distances.append((dist, shade))
 
     shade_distances.sort()
-    recommended = [s[1] for s in shade_distances[:3]]
+
+    # Normalize distances for scoring
+    max_distance = max([d[0] for d in shade_distances[:5]]) or 1  # prevent divide by 0
+
+    recommended = []
+    for dist, shade in shade_distances[:3]:
+        confidence = round((1 - dist / max_distance) * 100)
+        recommended.append({
+            "name": shade["name"],
+            "hex": shade["hex"],
+            "image": shade["image"],
+            "link": shade["link"],
+            "confidence": confidence
+        })
+
 
     return {
         "status": "Lip color extracted",

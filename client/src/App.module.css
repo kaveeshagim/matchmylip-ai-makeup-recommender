@@ -47,6 +47,22 @@ input {
   margin-top: 10px;
   display: inline-block;
 }
+
+.download-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #e91e63;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.download-btn:hover {
+  background-color: #c2185b;
+}
+
 @media screen and (max-width: 600px) {
   .recommendations {
     flex-direction: column;

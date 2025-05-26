@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import ResultCard from "./components/ResultCard";
 import styles from "./App.module.css";
+import { toPng } from "html-to-image";
+import { useRef } from "react";
 
 type LipColorResult = {
   undertone: string;
@@ -16,6 +18,7 @@ type LipColorResult = {
     hex: string;
     image: string;
     link: string;
+    confidence: number;
   }[];
 };
 
@@ -24,6 +27,19 @@ function App() {
   const [result, setResult] = useState<LipColorResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const resultRef = useRef<HTMLDivElement>(null);
+
+  const handleDownload = () => {
+    if (!resultRef.current) return;
+
+    toPng(resultRef.current).then((dataUrl) => {
+      const link = document.createElement("a");
+      link.download = "matchmylip-result.png";
+      link.href = dataUrl;
+      link.click();
+    });
+  };
 
   const handleUpload = async () => {
     if (!selectedFile) return;
@@ -87,11 +103,27 @@ function App() {
             </p>
           </div>
 
-          <div className={styles.recommendations}>
-            {result.recommended_shades.map((shade, index) => (
-              <ResultCard key={index} shade={shade} />
-            ))}
+          <div ref={resultRef}>
+            <div className="summary">
+              <p>
+                <strong>Undertone:</strong> {result.undertone}
+              </p>
+              <p>
+                <strong>Lip Color:</strong>{" "}
+                <span style={{ backgroundColor: result.hex }}>
+                  {result.hex}
+                </span>
+              </p>
+            </div>
+            <div className="recommendations">
+              {result.recommended_shades.map((shade, index) => (
+                <ResultCard key={index} shade={shade} />
+              ))}
+            </div>
           </div>
+          <button onClick={handleDownload} className="download-btn">
+            💾 Save Your Match
+          </button>
         </>
       )}
     </div>
